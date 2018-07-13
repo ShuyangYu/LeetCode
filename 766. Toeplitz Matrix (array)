@@ -1,0 +1,54 @@
+# 766. Toeplitz Matrix (array)  
+## My submission  
+```python  
+class Solution(object):
+    def isToeplitzMatrix(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: bool
+        """
+        R, C = len(matrix), len(matrix[0])
+        if(C > R):
+            for i in range(R - 1):
+                result = [matrix[i + j][j] for j in range(R - i)]
+                if(result != [result[i][0]] * (R - i)):
+                    return(False)
+
+            for i in range(1, C - 1):
+                result = [matrix[j][i + j] for j in range(R - i + 1)]
+                if(result != [result[0]] * (R - i + 1)):
+                    return(False)
+        elif(C < R):
+            for i in range(0, C - 1):
+                result = [matrix[j][i + j] for j in range(C - i)]
+                if(result != [result[0]] * (R - i)):
+                    return(False)
+            for i in range(1, R - 1):
+                result = [matrix[i + j][j] for j in range(C - i + 1)]
+                if(result != [result[0]] * (R - i + 1)):
+                    return(False)
+        elif(C == R):
+            for i in range(R - 1):
+                result = [matrix[i + j][j] for j in range(R - i)]
+                if(result != [matrix[i][0]] * (R - i)):
+                    return(False)
+
+            for i in range(1, C - 1):
+                result = [matrix[j][i + j] for j in range(R - i)]
+                if(result != [result[0]] * (R - i)):
+                    return(False)            
+            
+        return(True)  
+```  
+没有ac，思路错误，将问题分为了R>C，R==C和R<C的情况，使问题过于复杂，没有抓到问题本质  
+## Discussion  
+···python  
+def isToeplitzMatrix(self, m):
+        for i in range(len(m) - 1):
+            for j in range(len(m[0]) - 1):
+                if m[i][j] != m[i + 1][j + 1]:
+                    return False
+        return True  
+def isToeplitzMatrix(self, m):
+        return all(m[i][j] == m[i+1][j+1] for i in range(len(m)-1) for j in range(len(m[0])-1))  
+```
