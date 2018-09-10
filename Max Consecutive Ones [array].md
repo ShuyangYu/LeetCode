@@ -1,0 +1,83 @@
+# Max Consecutive Ones  
+## My solution  
+```java  
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int l = nums.length;
+        int result = 0;
+        int max_result = 0;
+        
+        if(l == 1){
+            if(nums[0] == 0){
+                return 0;
+            }
+            else{
+                return 1;
+            }
+        }
+        else{
+            for(int x: nums){
+                if(x == 1){
+                    result += 1;
+                    if(result > max_result) max_result = result;
+                }
+                else{
+                    if(result > max_result) max_result = result;
+                    result = 0;
+                }
+            }
+        }
+        return max_result;
+        
+    }
+}
+```
+## Discussion  
+```java
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int max = 0;
+        int sum = 0;
+        for(int i = 0 ; i< nums.length; i ++){
+            sum += nums[i];
+            if(nums[i] == 0)    // reset sum to zero when encounters zeros
+                sum = 0;
+            else                // keep update max
+                max = Math.max(max, sum);
+        }
+        return max;
+    }
+}
+```
+  
+## quick  
+```java  
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        
+        if(nums == null || nums.length == 0) return 0;
+        if(nums.length == 1) { return nums[0]; } //可直接返回nums[0]；我的多余
+        int len = nums.length;
+        int cur = 0;
+        int max = 0;
+        for(int i = 0; i < len; ) {
+            if(nums[i] == 1) {
+                cur++;
+                i++;
+            } else {
+                if(cur > max) max = cur;
+                cur = 0;
+                if(i+max+1 >= 0 && i+max+1 < len  && nums[i+max+1]==0) 
+                    i += max+2;
+                else if(i+max >= 0 && i+max < len  && nums[i+max]==0)
+                    i += max+1;
+                else if(i+max-1 >= 0 && i+max-1 < len  && nums[i+max-1]==0)
+                    i += max;
+                else i++;
+            }
+        }
+        if(cur>max) max = cur;
+        return max;
+    }
+}
+```
