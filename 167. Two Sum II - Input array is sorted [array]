@@ -1,0 +1,41 @@
+#167. Two Sum II - Input array is sorted [array]  
+## My submission(8)  
+```java  
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        for(int i = 0; (numbers[i] <= target) && (i < numbers.length - 1); i++){
+            for(int j = i + 1; j < numbers.length; j++){
+                if(numbers[i] + numbers[j] > target) break;
+                else if(numbers[i] + numbers[j] == target) return new int[]{i + 1, j + 1};
+            }
+        }
+        return new int[]{0, 0};
+    }
+}
+```
+## quick  
+```java  
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        //assert (numbers.length >= 2);
+
+        int left = 0;
+        int right = numbers.length - 1;
+        int[] result = new int[2];
+        while (left < right) {
+            if (numbers[left] + numbers[right] == target) {
+                result[0] = left + 1;
+                result[1] = right + 1;
+                return result;
+            } else if (numbers[left] + numbers[right] < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        System.out.println("The input has no solution");
+        return result;
+    }
+}
+```
